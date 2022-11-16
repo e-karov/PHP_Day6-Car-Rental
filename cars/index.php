@@ -2,15 +2,25 @@
 session_start();
 require_once '../components/db_connect.php';
 
-if (isset($_SESSION['user']) != "") {
-    header("Location: ../home.php");
-    exit;
-}
+// if (isset($_SESSION['user']) != "") {
+//     header("Location: ../home.php");
+//     exit;
+// }
 
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
     header("Location: ../index.php");
     exit;
 }
+$nav_buttons = "";
+if (isset($_SESSION['adm'])) {
+    $nav_buttons = "
+        <div class='mb-3'>
+            <a href='create.php'><button class='btn btn-primary' type='button'>Add product</button></a>
+            <a href='../dashboard.php'><button class='btn btn-success' type='button'>Dashboard</button></a>
+        </div>
+        ";
+}
+
 
 $sql = "SELECT * FROM car";
 $result = mysqli_query($connect, $sql);
@@ -18,15 +28,28 @@ $tbody = '';
 if (mysqli_num_rows($result)  > 0) {
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         $available = ($row['available'] == 1) ? 'Available' : 'Not available';
-        $tbody .= "<tr>
-            <td><img class='img-thumbnail' src='../pictures/" . $row['picture'] . "'</td>
-            <td>" . $row['make'] . "</td>
-            <td>" . $row['model'] . "</td>
-            <td>" . $row['price'] . "</td>
-            <td>" . $available . "</td>
-            <td><a href='update.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
-            <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
-            </tr>";
+        if (isset($_SESSION['adm'])) {
+            $tbody .= "<tr>
+        <td><img class='img-thumbnail' src='../pictures/" . $row['picture'] . "'</td>
+        <td>" . $row['make'] . "</td>
+        <td>" . $row['model'] . "</td>
+        <td>" . $row['price'] . "</td>
+        <td>" . $available . "</td>
+        <td><a href='update.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
+        <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+        </tr>";
+        } elseif (isset($_SESSION['user'])) {
+            if ($available) {
+                $tbody .= "<tr>
+                <td><img class='img-thumbnail' src='../pictures/" . $row['picture'] . "'</td>
+                <td>" . $row['make'] . "</td>
+                <td>" . $row['model'] . "</td>
+                <td>" . $row['price'] . "</td>
+                <td><a href='booking.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' type='button'>
+                Go to Reservation</button></a>
+                </tr>";
+            }
+        }
     };
 } else {
     $tbody =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
@@ -66,19 +89,15 @@ mysqli_close($connect);
 
 <body>
     <div class="manageProduct w-75 mt-3">
-        <div class='mb-3'>
-            <a href="create.php"><button class='btn btn-primary' type="button">Add product</button></a>
-            <a href="../dashboard.php"><button class='btn btn-success' type="button">Dashboard</button></a>
-        </div>
-        <p class='h2'>Products</p>
+        <?= $nav_buttons; ?>
+        <p class='h2'>Cars Available</p>
         <table class='table table-striped'>
             <thead class='table-success'>
                 <tr>
                     <th>Picture</th>
                     <th>Make</th>
                     <th>Model</th>
-                    <th>Price</th>
-                    <th>Availability</th>
+                    <th>Price per Day</th>
                     <th>Action</th>
                 </tr>
             </thead>

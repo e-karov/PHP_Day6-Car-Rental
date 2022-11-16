@@ -43,12 +43,18 @@ mysqli_close($connect);
 
 <body>
     <div class="container">
-        <div class="hero">
+        <div class="hero" style="text-align: center;">
             <img class="userImage" src="pictures/<?php echo $row['picture']; ?>" alt="<?php echo $row['first_name']; ?>">
-            <p class="text-white">Hi <?php echo $row['first_name']; ?></p>
+            <p class="text-white">Hi <?php echo $row['first_name'] . '!'; ?></p>
+            <aside style="position: float-right; ">
+                <a href="logout.php?logout"><button class="btn btn-outline-secondary" style="color: yellow; float:left">Sign Out</button></a>
+                <a href="update.php?id=<?php echo $_SESSION['user'] ?>">
+                    <button class="btn btn-outline-secondary" style="color: yellow;">Update your profile</button>
+                </a>
+                <a href="cars/index.php ?>"><button class="btn btn-outline-secondary" style="color: yellow;">Make a Reservation</button></a>
+            </aside>
         </div>
-        <a href="logout.php?logout">Sign Out</a>
-        <a href="update.php?id=<?php echo $_SESSION['user'] ?>">Update your profile</a>
     </div>
 </body>
+
 </html>
