@@ -15,27 +15,15 @@ require_once '../components/db_connect.php';
 
 if ($_GET['id']) {
     $id = $_GET['id'];
-    $sql = "SELECT * FROM products WHERE id = {$id}";
+    $sql = "SELECT * FROM car WHERE id = {$id}";
     $result = mysqli_query($connect, $sql);
     if (mysqli_num_rows($result) == 1) {
         $data = mysqli_fetch_assoc($result);
-        $name = $data['name'];
+        $make = $data['make'];
         $price = $data['price'];
         $picture = $data['picture'];
-        $supplier = $data['fk_supplierId'];
-        $resultSup = mysqli_query($connect, "SELECT * FROM suppliers");
-        $supList = "";
-        if (mysqli_num_rows($resultSup) > 0) {
-            while ($row = $resultSup->fetch_array(MYSQLI_ASSOC)) {
-                if ($row['supplierId'] == $supplier) {
-                    $supList .= "<option selected value='{$row['supplierId']}'>{$row['sup_name']}</option>";
-                } else {
-                    $supList .= "<option value='{$row['supplierId']}'>{$row['sup_name']}</option>";
-                }
-            }
-        } else {
-            $supList = "<li>There are no suppliers registered</li>";
-        }
+        $model = $data['model'];
+        $available = ($data['available'] == 1) ? "Available" : "Not available";
     } else {
         header("location: error.php");
     }
@@ -49,7 +37,7 @@ if ($_GET['id']) {
 <html>
 
 <head>
-    <title>Edit Product</title>
+    <title>Edit Car</title>
     <?php require_once '../components/boot.php' ?>
     <style type="text/css">
         fieldset {
@@ -67,12 +55,16 @@ if ($_GET['id']) {
 
 <body>
     <fieldset>
-        <legend class='h2'>Update request <img class='img-thumbnail rounded-circle' src='pictures/<?php echo $picture ?>' alt="<?php echo $name ?>"></legend>
+        <legend class='h2'>Update request <img class='img-thumbnail rounded-circle' src='../pictures/<?php echo $picture ?>' alt="<?php echo "{$make} {$model}" ?>"></legend>
         <form action="actions/a_update.php" method="post" enctype="multipart/form-data">
             <table class="table">
                 <tr>
-                    <th>Name</th>
-                    <td><input class="form-control" type="text" name="name" placeholder="Product Name" value="<?php echo $name ?>" /></td>
+                    <th>Make</th>
+                    <td><input class="form-control" type="text" name="make" placeholder="Car Make" value="<?php echo $make ?>" /></td>
+                </tr>
+                <tr>
+                    <th>Model</th>
+                    <td><input class="form-control" type="text" name="model" placeholder="Car Model" value="<?php echo $model ?>" /></td>
                 </tr>
                 <tr>
                     <th>Price</th>
@@ -83,10 +75,14 @@ if ($_GET['id']) {
                     <td><input class="form-control" type="file" name="picture" /></td>
                 </tr>
                 <tr>
-                    <th>Supplier</th>
+                    <th>Available</th>
                     <td>
-                        <select class="form-select" name="supplier" aria-label="Default select example">
-                            <?php echo $supList; ?>
+                        <select class="form-select" name="available" aria-label="Default select example">
+                            <option selected value="<?php echo $available; ?>"><?php echo $available; ?></option>
+
+                            <option value="1">Available</option>
+                            <option value="0">Not available</option>
+
                         </select>
                     </td>
                 </tr>
@@ -100,4 +96,5 @@ if ($_GET['id']) {
         </form>
     </fieldset>
 </body>
+
 </html>

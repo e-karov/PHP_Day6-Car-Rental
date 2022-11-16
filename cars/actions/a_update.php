@@ -17,19 +17,21 @@ require_once '../../components/file_upload.php';
 
 
 if ($_POST) {
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $supplier = $_POST['supplier'];
     $id = $_POST['id'];
+    $make = $_POST['make'];
+    $model = $_POST['model'];
+    $price = $_POST['price'];
+    $available = $_POST['available'];
+
     //variable for upload pictures errors is initialised
     $uploadError = '';
 
-    $picture = file_upload($_FILES['picture'], 'product'); //file_upload() called  
+    $picture = file_upload($_FILES['picture'], 'car');
     if ($picture->error === 0) {
-        ($_POST["picture"] == "product.png") ?: unlink("../pictures/$_POST[picture]");
-        $sql = "UPDATE products SET name = '$name', price = $price, picture = '$picture->fileName', fk_supplierId = $supplier WHERE id = {$id}";
+        ($_POST["picture"] == "car.png") ?: unlink("../../pictures/$_POST[picture]");
+        $sql = "UPDATE car SET make = '$make', price = $price, picture = '$picture->fileName', available = '$available' WHERE id = {$id}";
     } else {
-        $sql = "UPDATE products SET name = '$name', price = $price, fk_supplierId = $supplier WHERE id = {$id}";
+        $sql = "UPDATE car SET make = '$make', price = $price, available = '$available' WHERE id = {$id}";
     }
     if (mysqli_query($connect, $sql) === TRUE) {
         $class = "success";
@@ -68,4 +70,5 @@ if ($_POST) {
         </div>
     </div>
 </body>
+
 </html>

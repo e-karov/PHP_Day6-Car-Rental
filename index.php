@@ -2,13 +2,13 @@
 session_start();
 require_once 'components/db_connect.php';
 
-// it will never let you open index (login) page if session is set
+
 if (isset($_SESSION['user']) != "") {
     header("Location: home.php");
     exit;
 }
 if (isset($_SESSION['adm']) != "") {
-    header("Location: dashboard.php"); // redirects to home.php
+    header("Location: dashboard.php");
 }
 
 $error = false;
@@ -16,7 +16,7 @@ $email = $password = $emailError = $passError = '';
 
 if (isset($_POST['btn-login'])) {
 
-    // prevent sql injections/ clear user invalid inputs
+
     $email = trim($_POST['email']);
     $email = strip_tags($email);
     $email = htmlspecialchars($email);
@@ -38,10 +38,10 @@ if (isset($_POST['btn-login'])) {
         $passError = "Please enter your password.";
     }
 
-    // if there's no error, continue to login
+
     if (!$error) {
 
-        $password = hash('sha256', $pass); // password hashing
+        $password = hash('sha256', $pass);
 
         $sql = "SELECT id, first_name, password, status FROM users WHERE email = '$email'";
         $result = mysqli_query($connect, $sql);
@@ -97,4 +97,5 @@ mysqli_close($connect);
         </form>
     </div>
 </body>
+
 </html>

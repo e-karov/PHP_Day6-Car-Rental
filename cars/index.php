@@ -17,12 +17,13 @@ $result = mysqli_query($connect, $sql);
 $tbody = '';
 if (mysqli_num_rows($result)  > 0) {
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $available = ($row['available'] == 1) ? 'Available' : 'Not available';
         $tbody .= "<tr>
             <td><img class='img-thumbnail' src='../pictures/" . $row['picture'] . "'</td>
             <td>" . $row['make'] . "</td>
             <td>" . $row['model'] . "</td>
             <td>" . $row['price'] . "</td>
-            <td>" . $row['available'] . "</td>
+            <td>" . $available . "</td>
             <td><a href='update.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
             <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
             </tr>";
@@ -77,7 +78,7 @@ mysqli_close($connect);
                     <th>Make</th>
                     <th>Model</th>
                     <th>Price</th>
-                    <th>Available</th>
+                    <th>Availability</th>
                     <th>Action</th>
                 </tr>
             </thead>
