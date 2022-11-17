@@ -67,6 +67,7 @@ if ($_POST) {
             <p><?php echo ($uploadError) ?? ''; ?></p>
             <a href='../update.php?id=<?= $id; ?>'><button class="btn btn-warning" type='button'>Back</button></a>
             <a href='../index.php'><button class="btn btn-success" type='button'>Home</button></a>
+            <a href='../../dashboard.php'><button class="btn btn-success" type='button'>Dashboard</button></a>
         </div>
     </div>
 </body>

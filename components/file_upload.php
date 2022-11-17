@@ -3,7 +3,7 @@ function file_upload($picture, $source = 'user')
 {
     $result = new stdClass(); //this object will carry status from file upload
     $result->fileName = 'avatar.png';
-    if ($source = 'car') {
+    if ($source == 'car') {
         $result->fileName = 'car.jpg';
     }
     $result->error = 1;
@@ -26,7 +26,7 @@ function file_upload($picture, $source = 'user')
                     $fileNewName = uniqid('') . "." . $fileExtension;
                     if ($source == 'car') {
                         $destination = "../../pictures/$fileNewName";
-                    } elseif ($source == 'user') {
+                    } else {
                         $destination = "pictures/$fileNewName";
                     }
                     if (move_uploaded_file($fileTmpName, $destination)) {
@@ -38,7 +38,7 @@ function file_upload($picture, $source = 'user')
                         return $result;
                     }
                 } else {
-                    $result->ErrorMessage = "This picture is bigger than the allowed 500Kb. <br> Please choose a smaller one and Update your profile.";
+                    $result->ErrorMessage = "This picture is bigger than the allowed 500Kb. <br> Please choose a smaller one and try again.";
                     return $result;
                 }
             } else {

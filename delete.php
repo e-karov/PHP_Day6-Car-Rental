@@ -10,9 +10,9 @@ if (isset($_SESSION["user"])) {
     header("Location: home.php");
     exit;
 }
-//initial bootstrap class for the confirmation message
+
 $class = 'd-none';
-//the GET method will show the info from the user to be deleted
+
 if ($_GET['id']) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM users WHERE id = {$id}";
@@ -91,4 +91,5 @@ mysqli_close($connect);
         </form>
     </fieldset>
 </body>
+
 </html>

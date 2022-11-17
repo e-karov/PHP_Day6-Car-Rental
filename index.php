@@ -76,6 +76,7 @@ mysqli_close($connect);
 
 <body>
     <div class="container">
+
         <form class="w-75" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
             <h2>Login</h2>
             <hr />

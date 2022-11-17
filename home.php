@@ -46,13 +46,14 @@ mysqli_close($connect);
         <div class="hero" style="text-align: center;">
             <img class="userImage" src="pictures/<?php echo $row['picture']; ?>" alt="<?php echo $row['first_name']; ?>">
             <p class="text-white">Hi <?php echo $row['first_name'] . '!'; ?></p>
-            <aside style="position: float-right; ">
-                <a href="logout.php?logout"><button class="btn btn-outline-secondary" style="color: yellow; float:left">Sign Out</button></a>
+            <div style="display:flex; justify-content:space-around; ">
+                <a href='cars/reservations.php?id="<?= $_SESSION['user']; ?>"'><button class='btn btn-outline-secondary' style='margin:3px; color:yellow;'>My Reservations</button></a>
+                <a href="cars/index.php"><button class="btn btn-outline-secondary" style="margin:3px; color:yellow;">New Reservation</button></a>
                 <a href="update.php?id=<?php echo $_SESSION['user'] ?>">
-                    <button class="btn btn-outline-secondary" style="color: yellow;">Update your profile</button>
+                    <button class="btn btn-outline-secondary" style="margin: 3px; color: yellow;">Update your profile</button>
                 </a>
-                <a href="cars/index.php ?>"><button class="btn btn-outline-secondary" style="color: yellow;">Make a Reservation</button></a>
-            </aside>
+                <a href="logout.php?logout"><button class="btn btn-outline-secondary" style="margin:3px; color:yellow; font-style:italic; ">Sign Out</button></a>
+            </div>
         </div>
     </div>
 </body>

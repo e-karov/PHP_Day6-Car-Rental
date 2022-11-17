@@ -33,7 +33,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-//update
 $class = 'd-none';
 if (isset($_POST["submit"])) {
     $f_name = $_POST['first_name'];
@@ -43,7 +42,7 @@ if (isset($_POST["submit"])) {
     $id = $_POST['id'];
     //variable for upload pictures errors is initialized
     $uploadError = '';
-    $pictureArray = file_upload($_FILES['picture']); //file_upload() called
+    $pictureArray = file_upload($_FILES['picture'], 'user');
     $picture = $pictureArray->fileName;
     if ($pictureArray->error === 0) {
         ($_POST["picture"] == "avatar.png") ?: unlink("pictures/{$_POST["picture"]}");
@@ -129,4 +128,5 @@ mysqli_close($connect);
         </form>
     </div>
 </body>
+
 </html>

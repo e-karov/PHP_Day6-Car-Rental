@@ -22,11 +22,11 @@ if ($_POST) {
 
     if (mysqli_query($connect, $sql) === true) {
         $class = "success";
-        $message = "Booking successfuly confirmed:<br>
+        $message = "Your Reservation is confirmed:<br>
             <table class='table w-50'>
                 <tr> 
                     <td> $make $model </td> 
-                </tr>
+                </tr> 
                 <tr> <td>Starting from: $from_date To: $to_date </td> </tr>
 
             </table><hr>";

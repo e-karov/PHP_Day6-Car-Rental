@@ -73,7 +73,7 @@ mysqli_close($connect);
             <div class="col-2">
                 <img class="userImage" src="pictures/admavatar.png" alt="Adm avatar">
                 <p class="">Administrator</p>
-                <a class="btn btn-success" href="cars/index.php">Cars</a>
+                <a class="btn btn-success" style="padding:5px 26px 5px 26px;" href="cars/index.php">Cars</a>
                 <a class="btn btn-danger" href="logout.php?logout">Sign Out</a>
             </div>
             <div class="col-8 mt-2">
